@@ -4,7 +4,8 @@
   "description": "Aufgabe für die Bewerbung bei der menten GmbH",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:frontend": "nx serve menten-bewerbung-frontend",
+    "start:backend": "nx serve menten-bewerbung-backend"
   },
   "repository": {
     "type": "git",
@@ -69,6 +70,7 @@
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
+    "@ngrx/signals": "^22.0.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0"
   }
