@@ -33,7 +33,7 @@ Kommentare und aussagekräftige Namen dokumentiert.
 
 ### Zeitmessung
 
-Um eine Übersicht der verwendeten Zeit und der Tätigkeiten zu erhalten, wird hier strukturiert aufgeführt, wie viel Zeit in Anspruch genommen wurde.
+Um eine Übersicht der verwendeten Zeit und der Tätigkeiten zu erhalten, wird hier strukturiert aufgeführt, wie viel Zeit in Anspruch genommen wurde. Da dieses Projekt in der Freizeit gemacht wird und einige Tätigkeiten mittendrin für mehrere Minuten oder Stunden unterbrochen werden, ist der Aufwand eine ungefähre Schätzung, gerundet auf 10 Min.
 
 | Task                                        | Definition of Done                                                                                                                                                                  | Abgeschlossen am | Geschätzter Aufwand in Min | Zeitaufwand in Min | Zählt zu Aufgabenzeit |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|----------------------------|--------------------|-----------------------|
