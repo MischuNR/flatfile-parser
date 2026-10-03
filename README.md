@@ -128,7 +128,7 @@ Um eine Übersicht der verwendeten Zeit und der Tätigkeiten zu erhalten, wird h
       ]
     }
   ],
-  "children": [
+  "positions": [
     {
       "type": "POS",
       "lineNr": 4,
@@ -183,6 +183,7 @@ Um eine Übersicht der verwendeten Zeit und der Tätigkeiten zu erhalten, wird h
 ```TS
 {
     id: string;
+    originalFileName: string; // Name der hochgeladenen Datei. Wird für den Download des JSON verwendet.
     isSuccess: boolean; // ob der Beleg erfolgreich verarbeitet wurde
     errorMsg?: string; // Fehlermeldung, die Zeile und exaktes Problem angibt
     data?: DocJson; // Späteres JSON-File. Ist bei einem Fehler nicht gesetzt.
