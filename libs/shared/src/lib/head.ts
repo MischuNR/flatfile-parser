@@ -4,9 +4,9 @@ import {PosJson} from "./pos";
 import {TextJson} from "./text";
 import {AlcJson} from "./alc";
 import {OptionalFieldValues} from "./optional-field-values";
+import {SharedRequiredFields} from "./shared-required-fields";
 
-export type RequiredHeadDocFields = FIELD_NAME.RECID |
-    FIELD_NAME.OHTRCP |
+export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTSND |
     FIELD_NAME.OHTDOT |
     FIELD_NAME.OHTDOD |
@@ -56,7 +56,8 @@ export type OptionalHeadDocFields = FIELD_NAME.OHTLN1 |
     FIELD_NAME.OHTPDF;
 
 
-export type HeadJson = RequiredFieldValues<RequiredHeadDocFields> &
+export type HeadJson = RequiredFieldValues<SharedRequiredFields> &
+    RequiredFieldValues<RequiredHeadDocFields> &
     OptionalFieldValues<OptionalHeadDocFields> &
     {
         HEAD_TEXT: TextJson[];
