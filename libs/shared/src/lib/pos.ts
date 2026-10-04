@@ -5,6 +5,8 @@ import {AlcJson} from "./alc";
 import {OptionalFieldValues} from "./optional-field-values";
 import {SharedRequiredFields} from "./shared-required-fields";
 
+export type PosDocFields = RequiredPosDocFields | OptionalPosDocFields;
+
 export type RequiredPosDocFields = FIELD_NAME.OPOLDF |
     FIELD_NAME.OPOEAN |
     FIELD_NAME.OPOSA |
