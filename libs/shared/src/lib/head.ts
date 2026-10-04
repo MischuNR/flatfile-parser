@@ -6,6 +6,8 @@ import {AlcJson} from "./alc";
 import {OptionalFieldValues} from "./optional-field-values";
 import {SharedRequiredFields} from "./shared-required-fields";
 
+export type HeadDocFields = RequiredHeadDocFields | OptionalHeadDocFields;
+
 export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTSND |
     FIELD_NAME.OHTDOT |
@@ -16,10 +18,6 @@ export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTON |
     FIELD_NAME.OHTOND |
     FIELD_NAME.OHTDQ |
-    FIELD_NAME.OHTDQD |
-    FIELD_NAME.OHTAKN |
-    FIELD_NAME.OHTUSB |
-    FIELD_NAME.OHTUSBD |
     FIELD_NAME.OHTIBY |
     FIELD_NAME.OHTVABY |
     FIELD_NAME.OHTIIV |
@@ -41,6 +39,10 @@ export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTINVTYP;
 
 export type OptionalHeadDocFields = FIELD_NAME.OHTLN1 |
+    FIELD_NAME.OHTDQD |
+    FIELD_NAME.OHTAKN |
+    FIELD_NAME.OHTUSB |
+    FIELD_NAME.OHTUSBD |
     FIELD_NAME.OHTLN2 |
     FIELD_NAME.OHTLN3 |
     FIELD_NAME.OHTLN4 |
