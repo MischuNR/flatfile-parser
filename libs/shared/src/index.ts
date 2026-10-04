@@ -1,3 +1,4 @@
 export * from './lib/api-routes';
 export * from './lib/doc';
-export * from './lib/doc-json';
+export * from './lib/head';
+export * from './lib/pos';
