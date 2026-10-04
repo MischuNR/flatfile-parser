@@ -5,6 +5,7 @@ import {maxValueLengthValidator} from "../validators/max-value-length-validator"
 import {dateValidator} from "../validators/date-validator";
 import {exactLengthValidator} from "../validators/exact-length-validator";
 import {decimalValidator} from "../validators/decimal-validator";
+import {allowedValuesValidator} from "../validators/allowed-values-validator";
 
 export const headFieldOrder  = [
     FIELD_NAME.OHTRCP,
@@ -76,6 +77,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
         fieldValidators: [
             minValueLengthValidator(1),
             maxValueLengthValidator(3),
+            allowedValuesValidator(['380', '381', '83', '84'])
         ]
     },
     [FIELD_NAME.OHTDOD]: {
@@ -96,6 +98,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
         required: true,
         fieldValidators: [
             exactLengthValidator(1),
+            allowedValuesValidator(['7', '9'])
         ]
     },
     [FIELD_NAME.OHTDLD]: {
@@ -380,7 +383,8 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTINVTYP]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(1)
+            exactLengthValidator(1),
+            allowedValuesValidator(['S', 'T'])
         ]
     },
     [FIELD_NAME.OHTPDF]: {

@@ -4,6 +4,7 @@ import {exactLengthValidator} from "../validators/exact-length-validator";
 import {minValueLengthValidator} from "../validators/min-value-length-validator";
 import {maxValueLengthValidator} from "../validators/max-value-length-validator";
 import {decimalValidator} from "../validators/decimal-validator";
+import {allowedValuesValidator} from "../validators/allowed-values-validator";
 
 export const alcFieldOrder = [
     FIELD_NAME.OZAKZA,
@@ -19,6 +20,7 @@ export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocField
         required: true,
         fieldValidators: [
             exactLengthValidator(1),
+            allowedValuesValidator(['A', 'C'])
         ]
     },
     [FIELD_NAME.OZAART]: {
@@ -26,6 +28,7 @@ export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocField
         fieldValidators: [
             minValueLengthValidator(2),
             maxValueLengthValidator(3),
+            allowedValuesValidator(['DI', 'TD', 'FC', 'IN', 'PC'])
         ]
     },
     [FIELD_NAME.OZAPRO]: {
