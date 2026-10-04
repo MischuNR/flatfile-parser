@@ -3,6 +3,8 @@ import {RequiredFieldValues} from "./required-field-values";
 import {OptionalFieldValues} from "./optional-field-values";
 import {SharedRequiredFields} from "./shared-required-fields";
 
+export type AlcDocFields = RequiredAlcDocFields | OptionalAlcDocFields;
+
 export type RequiredAlcDocFields = FIELD_NAME.OZAKZA |
     FIELD_NAME.OZAART |
     FIELD_NAME.OZAPROR;

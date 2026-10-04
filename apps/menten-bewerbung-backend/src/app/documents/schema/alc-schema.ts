@@ -1,30 +1,63 @@
 import {FieldValidator} from "../types/field-validator";
-import {FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields} from "shared";
+import {AlcDocFields, FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields} from "shared";
+import {exactLengthValidator} from "../validators/exact-length-validator";
+import {minValueLengthValidator} from "../validators/min-value-length-validator";
+import {maxValueLengthValidator} from "../validators/max-value-length-validator";
+import {decimalValidator} from "../validators/decimal-validator";
+
+export const alcFieldOrder = [
+    FIELD_NAME.OZAKZA,
+    FIELD_NAME.OZAART,
+    FIELD_NAME.OZAPRO,
+    FIELD_NAME.OZAPROB,
+    FIELD_NAME.OZAPROR,
+    FIELD_NAME.OZAMWS,
+] as const satisfies readonly AlcDocFields[];
 
 export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocFields> = {
     [FIELD_NAME.OZAKZA]: {
         required: true,
-        fieldValidators: []
+        fieldValidators: [
+            exactLengthValidator(1),
+        ]
     },
     [FIELD_NAME.OZAART]: {
         required: true,
-        fieldValidators: []
-    },
-    [FIELD_NAME.OZAPROR]: {
-        required: true,
-        fieldValidators: []
+        fieldValidators: [
+            minValueLengthValidator(2),
+            maxValueLengthValidator(3),
+        ]
     },
     [FIELD_NAME.OZAPRO]: {
         required: false,
-        fieldValidators: []
+        fieldValidators: [
+            minValueLengthValidator(4),
+            maxValueLengthValidator(6),
+            decimalValidator(3, 2)
+        ]
     },
     [FIELD_NAME.OZAPROB]: {
         required: false,
-        fieldValidators: []
+        fieldValidators: [
+            minValueLengthValidator(4),
+            maxValueLengthValidator(15),
+            decimalValidator(11, 2)
+        ]
+    },
+    [FIELD_NAME.OZAPROR]: {
+        required: true,
+        fieldValidators: [
+            minValueLengthValidator(4),
+            maxValueLengthValidator(15),
+            decimalValidator(11, 2)
+        ]
     },
     [FIELD_NAME.OZAMWS]: {
         required: false,
-        fieldValidators: []
+        fieldValidators: [
+            minValueLengthValidator(4),
+            maxValueLengthValidator(5),
+            decimalValidator(2, 2)
+        ]
     },
-
-} as const;
+};

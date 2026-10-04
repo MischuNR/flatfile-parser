@@ -3,7 +3,7 @@ import {decodeFile} from "../../utils/decode-file";
 import {Doc, DOC_TYPE, FIELD_NAME} from "shared";
 import {DocValidation} from "./types/doc-validation";
 import {headFieldOrder, headSchema} from "./schema/head-schema";
-import {alcSchema} from "./schema/alc-schema";
+import {alcFieldOrder, alcSchema} from "./schema/alc-schema";
 import {posFieldOrder, posSchema} from "./schema/pos-schema";
 import {textFieldOrder, textSchema} from "./schema/text-schema";
 
@@ -22,7 +22,7 @@ export class DocumentsService {
         },
         [DOC_TYPE.ALC]: {
             fields: alcSchema,
-            order: [],
+            order: alcFieldOrder,
         },
         [DOC_TYPE.TEXT]: {
             fields: textSchema,
