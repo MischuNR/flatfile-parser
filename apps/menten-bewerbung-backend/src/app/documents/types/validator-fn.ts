@@ -1,1 +1,0 @@
-export type ValidatorFn = (...args: any[]) => string | null;

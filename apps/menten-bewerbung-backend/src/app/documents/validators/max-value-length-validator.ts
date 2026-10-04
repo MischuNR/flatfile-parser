@@ -1,0 +1,8 @@
+import {FieldValidatorFn} from "../types/field-validator-fn";
+
+export const maxValueLengthValidator = (maxLength: number): FieldValidatorFn => (value: string) => {
+    if (value.length > maxLength) {
+        return `Darf höchstens ${maxLength} Zeichen haben.`;
+    }
+    return null;
+};

@@ -62,4 +62,4 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
         required: false,
         fieldValidators: []
     },
-}
+} as const;

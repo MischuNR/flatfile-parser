@@ -32,4 +32,4 @@ export const textSchema: FieldValidator<RequiredTextDocFields, OptionalTextDocFi
         required: false,
         fieldValidators: []
     },
-}
+} as const;

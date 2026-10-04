@@ -27,4 +27,4 @@ export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocField
         fieldValidators: []
     },
 
-};
+} as const;
