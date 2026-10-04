@@ -5,7 +5,7 @@ import {DocValidation} from "./types/doc-validation";
 import {headFieldOrder, headSchema} from "./schema/head-schema";
 import {alcSchema} from "./schema/alc-schema";
 import {posFieldOrder, posSchema} from "./schema/pos-schema";
-import {textSchema} from "./schema/text-schema";
+import {textFieldOrder, textSchema} from "./schema/text-schema";
 
 @Injectable()
 export class DocumentsService {
@@ -26,7 +26,7 @@ export class DocumentsService {
         },
         [DOC_TYPE.TEXT]: {
             fields: textSchema,
-            order: []
+            order: textFieldOrder
         }
     };
 

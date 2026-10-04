@@ -3,6 +3,8 @@ import {RequiredFieldValues} from "./required-field-values";
 import {OptionalFieldValues} from "./optional-field-values";
 import {SharedRequiredFields} from "./shared-required-fields";
 
+export type TextDocFields = RequiredTextDocFields | OptionalTextDocFields;
+
 export type RequiredTextDocFields = FIELD_NAME.OTXTXT1 |
     FIELD_NAME.OTXLNG;
 

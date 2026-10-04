@@ -5,7 +5,7 @@ import {
     RequiredHeadDocFields,
     RequiredPosDocFields,
     OptionalAlcDocFields, RequiredAlcDocFields, RequiredTextDocFields, OptionalTextDocFields, HeadDocFields,
-    PosDocFields
+    PosDocFields, TextDocFields
 } from "shared";
 import {FieldValidator} from "./field-validator";
 
@@ -27,6 +27,6 @@ export type DocValidation = {
     };
     [DOC_TYPE.TEXT]: {
         fields: FieldValidator<RequiredTextDocFields, OptionalTextDocFields>,
-        order: any
+        order: readonly TextDocFields[],
     };
 }
