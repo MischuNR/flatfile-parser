@@ -1,45 +1,292 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable, Logger, NotFoundException} from '@nestjs/common';
 import {decodeFile} from '../../utils/decode-file';
-import {Doc, DOC_TYPE} from 'shared';
+import {Doc, DOC_TYPE, HeadJson} from 'shared';
 import {DocValidation} from './types/doc-validation';
 import {headFieldOrder, headSchema} from './schema/head-schema';
 import {alcFieldOrder, alcSchema} from './schema/alc-schema';
 import {posFieldOrder, posSchema} from './schema/pos-schema';
 import {textFieldOrder, textSchema} from './schema/text-schema';
+import {DocRaw} from './types/doc-raw';
+import {BaseLineMap} from './types/base-line-map';
+import {DocumentError} from './errors/document-error';
+import {randomUUID} from 'node:crypto';
+import {FieldValidatorFn} from './types/field-validator-fn';
+import {parse} from 'node:path';
+import {GetJsonFileResponse} from './types/get-json-file-response';
+
+interface CreateDocRawResponse {
+    docs: DocRaw[];
+    noHead: DocRaw[];
+}
+
+type AnyValidation = {
+    fields: Record<string, { required: boolean; fieldValidators: FieldValidatorFn[] }>;
+    order: readonly string[];
+};
+
 
 @Injectable()
 export class DocumentsService {
+    private readonly logger = new Logger(DocumentsService.name);
+
+    // memory of docs
     private readonly docs: Doc[] = [];
 
     private readonly docValidation: DocValidation = {
-        [DOC_TYPE.HEAD]: {
-            fields: headSchema,
-            order: headFieldOrder
-        },
-        [DOC_TYPE.POS]: {
-            fields: posSchema,
-            order: posFieldOrder
-        },
-        [DOC_TYPE.ALC]: {
-            fields: alcSchema,
-            order: alcFieldOrder,
-        },
-        [DOC_TYPE.TEXT]: {
-            fields: textSchema,
-            order: textFieldOrder
-        }
+        [DOC_TYPE.HEAD]: {fields: headSchema, order: headFieldOrder},
+        [DOC_TYPE.POS]: {fields: posSchema, order: posFieldOrder},
+        [DOC_TYPE.ALC]: {fields: alcSchema, order: alcFieldOrder},
+        [DOC_TYPE.TEXT]: {fields: textSchema, order: textFieldOrder},
     };
 
-    public uploadFile(file: Express.Multer.File) {
+    public uploadFile(file: Express.Multer.File): Doc[] {
+        const resultArr: Doc[] = [];
         const fileContents = decodeFile(file);
-        return 'This action adds a new document';
+
+        // split by new line
+        const lines = fileContents.split(/\r?\n/);
+
+        // remove empty lines at the end.
+        while (lines.length > 0 && !lines.at(-1)?.trim()) {
+            lines.pop();
+        }
+
+        // there are no lines
+        if (lines.length === 0) {
+            throw new BadRequestException('Die Datei ist leer.');
+        }
+
+        const baseLineMapArr = this.createBaseLineMap(lines);
+        const {docs, noHead} = this.createDocRawArr(baseLineMapArr);
+
+        // lines before the first HEAD belong to no document. Report them as one failed entry.
+        if (noHead.length > 0) {
+            resultArr.push({
+                id: randomUUID(),
+                originalFileName: file.originalname,
+                isSuccess: false,
+                errorMsg: new DocumentError(
+                    noHead[0].lineNr,
+                    'Satz vor dem ersten HEAD. Er gehört zu keinem Beleg.',
+                ).message,
+            });
+        }
+
+        resultArr.push(...this.createDocs(docs, file.originalname));
+
+        // save to memory
+        this.docs.push(...resultArr);
+
+        return resultArr;
     }
 
     public getAllDocuments(): Doc[] {
-        return [];
+        return this.docs;
     }
 
-    public getJsonForId(id: string): null {
-        return null;
+    public getJsonForId(id: string): GetJsonFileResponse {
+        const doc = this.docs.find((d) => d.id === id);
+
+        if (!doc) {
+            throw new NotFoundException('Beleg nicht gefunden.');
+        }
+
+        if (!doc.isSuccess || !doc.data) {
+            throw new BadRequestException('Der Beleg ist fehlerhaft, es kann keine JSON-Datei erzeugt werden.');
+        }
+
+        const fileName = `${parse(doc.originalFileName).name}_${doc.data.OHTDON}.json`;
+        return {fileName, data: doc.data};
+    }
+
+    /**
+     * creates the base line map. This is just every line split with lineNr, type and its fields.
+     * @param fileContent
+     * @private
+     */
+    private createBaseLineMap(fileContent: string[]): BaseLineMap[] {
+        return fileContent.map((line: string, index: number): BaseLineMap => {
+            const [type, ...fields] = line.split('|');
+            return {
+                lineNr: index + 1,
+                type: type as DOC_TYPE, // type is still an unchecked string here, it is validated later. Until then it's treated as DOC_TYPE
+                fields,
+            };
+        });
+    }
+
+    /**
+     * creates and returns DocRaw. See interface for documentation.
+     * This function was generated by claude. Comments added by me.
+     * @private
+     * @param lines
+     */
+    private createDocRawArr(lines: BaseLineMap[]): CreateDocRawResponse {
+        const docs: DocRaw[] = [];
+        // elements that have no head. Is used for lines before the first head.
+        const noHead: DocRaw[] = [];
+        let currentHead: DocRaw | undefined;
+        let currentPos: DocRaw | undefined;
+
+        for (const line of lines) {
+            const node: DocRaw = {...line, texts: [], alcs: []};
+
+            // new document starts. Reset currentPos.
+            if (line.type === DOC_TYPE.HEAD) {
+                node.pos = [];
+                node.unknownLines = [];
+                currentHead = node;
+                currentPos = undefined;
+                docs.push(node);
+                continue;
+            }
+
+            // no current head exists. This means the element has no head.
+            if (currentHead === undefined) {
+                noHead.push(node);
+                continue;
+            }
+
+            // add current pos to head and set current pos.
+            if (line.type === DOC_TYPE.POS) {
+                currentHead.pos?.push(node);
+                currentPos = node;
+                continue;
+            }
+
+            // line is either TEXT or ALC.
+            if (line.type === DOC_TYPE.TEXT || line.type === DOC_TYPE.ALC) {
+                // if no currentPos is set the TEXT or ALC belongs to currentHead.
+                const owner = currentPos ?? currentHead;
+                const keyToAddTo = line.type === DOC_TYPE.TEXT ? 'texts' : 'alcs';
+                owner[keyToAddTo].push(node);
+                continue;
+            }
+
+            // unknown type. Add to unknown lines.
+            currentHead.unknownLines?.push(node);
+        }
+
+        return {docs, noHead};
+    }
+
+    /**
+     * This function was entirely generated using claude. Documents were added by me.
+     * validates every DocRaw.
+     * @private
+     */
+    private createDocs(docRaws: DocRaw[], originalFileName: string): Doc[] {
+        const docs: Doc[] = [];
+
+        for (const docRaw of docRaws) {
+            const id = randomUUID();
+            try {
+                // this will throw document specific error if something fails
+                const data = this.createAndValidateDoc(docRaw);
+                docs.push({id, originalFileName, isSuccess: true, data});
+            } catch (err: unknown) {
+                if (!(err instanceof DocumentError)) {
+                    // error isn't handled properly. This is a real bug. Log it.
+                    this.logger.error(err);
+                }
+                const errorMsg =
+                    err instanceof DocumentError
+                        ? err.message
+                        : `Satz ${docRaw.lineNr}: Unerwarteter Fehler bei der Verarbeitung.`;
+                docs.push({id, originalFileName, isSuccess: false, errorMsg});
+            }
+        }
+        return docs;
+    }
+
+    /**
+     * creates and validates the entire doc.
+     * @param docRaw
+     * @private
+     */
+    private createAndValidateDoc(docRaw: DocRaw): HeadJson {
+        // has unknown types. Throw error.
+        if (docRaw.unknownLines?.length) {
+            const unknown = docRaw.unknownLines[0];
+            throw new DocumentError(unknown.lineNr, `Unbekannte Satzart "${unknown.type}".`);
+        }
+
+        // TODO: validateDocType(docRaw) (min/max counts) will be called here.
+
+        // create and validate head.
+        const head = this.validateDocRawAndCreateRecord(docRaw);
+
+        // create and validate pos
+        const pos = (docRaw.pos ?? []).map((p) => ({
+            ...this.validateDocRawAndCreateRecord(p),
+            POS_TEXT: p.texts.map((t) => this.validateDocRawAndCreateRecord(t)),
+            POS_ALC: p.alcs.map((a) => this.validateDocRawAndCreateRecord(a)),
+        }));
+
+        // return head and all its assigned elements.
+        return {
+            ...head,
+            HEAD_TEXT: docRaw.texts.map((t) => this.validateDocRawAndCreateRecord(t)),
+            HEAD_ALC: docRaw.alcs.map((a) => this.validateDocRawAndCreateRecord(a)),
+            POS: pos,
+        } as HeadJson;
+    }
+
+    /**
+     * returns the matching schema or undefined. Undefined means we haven't considered the type yet.
+     * @param type
+     * @private
+     */
+    private getSchema(type: string): AnyValidation | undefined {
+        return this.docValidation[type as DOC_TYPE];
+    }
+
+    /**
+     * Validates the DocRaw and its fields
+     * @param record
+     * @private
+     * @return returns the record with field and value. Important: this is loosely typed but our checks will make it fit the corresponding interface.
+     */
+    private validateDocRawAndCreateRecord(record: DocRaw): Record<string, string> {
+        const schema = this.getSchema(record.type);
+        if (!schema) {
+            throw new DocumentError(record.lineNr, `Unbekannte Satzart "${record.type}".`);
+        }
+
+        // too few or too many fields. Throw error.
+        if (record.fields.length !== schema.order.length) {
+            throw new DocumentError(
+                record.lineNr,
+                `${record.type} hat ${record.fields.length} Felder, erwartet werden ${schema.order.length}.`,
+            );
+        }
+
+        const json: Record<string, string> = {RECID: record.type};
+
+        // iterate over order with index and fieldName. Index is the position in fields.
+        for (const [index, fieldName] of schema.order.entries()) {
+            const rule = schema.fields[fieldName];
+            const value = record.fields[index];
+
+            // value is empty. Required -> error, optional -> skip.
+            if (value === '') {
+                if (rule.required) {
+                    throw new DocumentError(record.lineNr, `${fieldName}: Pflichtfeld fehlt.`);
+                }
+                continue;
+            }
+
+            // first failing validator throws.
+            for (const validator of rule.fieldValidators) {
+                const error = validator(value);
+                if (error) {
+                    throw new DocumentError(record.lineNr, `${fieldName}: ${error}`);
+                }
+            }
+
+            json[fieldName] = value;
+        }
+
+        return json;
     }
 }

@@ -62,6 +62,8 @@ export default [
                 "single",
                 { avoidEscape: true, allowTemplateLiterals: "avoidEscape" }
             ],
+            "@stylistic/semi": ["error", "always"],
+            "curly": ["error", "all"],
             "@typescript-eslint/no-unused-vars": "off",
             "unused-imports/no-unused-imports": "error",
             "unused-imports/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }]

@@ -8,9 +8,9 @@ export type FieldValidator<RequiredFields extends PropertyKey, OptionalFields ex
     [R in RequiredFields]: FieldValidatorBase & { required: true };
 } & {
     [O in OptionalFields]: FieldValidatorBase & {required: false};
-}
+};
 
 
 type FieldValidatorBase = {
     fieldValidators: FieldValidatorFn[];
-}
+};
