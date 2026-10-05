@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start:frontend": "nx serve menten-bewerbung-frontend",
-    "start:backend": "nx serve menten-bewerbung-backend"
+    "start:backend": "nx serve menten-bewerbung-backend",
+    "test:validators": "nx test menten-bewerbung-backend validators/"
   },
   "repository": {
     "type": "git",
