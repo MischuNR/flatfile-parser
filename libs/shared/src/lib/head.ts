@@ -5,6 +5,7 @@ import {TextJson} from './text';
 import {AlcJson} from './alc';
 import {OptionalFieldValues} from './optional-field-values';
 import {SharedRequiredFields} from './shared-required-fields';
+import {DOC_TYPE} from "./doc-types";
 
 export type HeadDocFields = RequiredHeadDocFields | OptionalHeadDocFields;
 
@@ -17,9 +18,7 @@ export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTDLD |
     FIELD_NAME.OHTON |
     FIELD_NAME.OHTOND |
-    FIELD_NAME.OHTDQ |
     FIELD_NAME.OHTIBY |
-    FIELD_NAME.OHTVABY |
     FIELD_NAME.OHTIIV |
     FIELD_NAME.OHTVAIV |
     FIELD_NAME.OHTIDP |
@@ -39,6 +38,8 @@ export type RequiredHeadDocFields = FIELD_NAME.OHTRCP |
     FIELD_NAME.OHTINVTYP;
 
 export type OptionalHeadDocFields = FIELD_NAME.OHTLN1 |
+    FIELD_NAME.OHTDQ |
+    FIELD_NAME.OHTVABY |
     FIELD_NAME.OHTDQD |
     FIELD_NAME.OHTAKN |
     FIELD_NAME.OHTUSB |
@@ -67,3 +68,4 @@ export type HeadJson = RequiredFieldValues<SharedRequiredFields> &
         POS: PosJson[];
     };
 
+export type HeadElementDocTypes = DOC_TYPE.POS | DOC_TYPE.ALC | DOC_TYPE.TEXT;

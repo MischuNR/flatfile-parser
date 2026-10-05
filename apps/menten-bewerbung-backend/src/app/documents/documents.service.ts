@@ -2,9 +2,9 @@ import {BadRequestException, Injectable, Logger, NotFoundException} from '@nestj
 import {decodeFile} from '../../utils/decode-file';
 import {Doc, DOC_TYPE, HeadJson} from 'shared';
 import {DocValidation} from './types/doc-validation';
-import {headFieldOrder, headSchema} from './schema/head-schema';
-import {alcFieldOrder, alcSchema} from './schema/alc-schema';
-import {posFieldOrder, posSchema} from './schema/pos-schema';
+import {headCrossFieldChecks, headElementValidators, headFieldOrder, headSchema} from './schema/head-schema';
+import {alcCrossFieldChecks, alcFieldOrder, alcSchema} from './schema/alc-schema';
+import {posCrossFieldChecks, posElementValidators, posFieldOrder, posSchema} from './schema/pos-schema';
 import {textFieldOrder, textSchema} from './schema/text-schema';
 import {DocRaw} from './types/doc-raw';
 import {BaseLineMap} from './types/base-line-map';
@@ -13,6 +13,7 @@ import {randomUUID} from 'node:crypto';
 import {FieldValidatorFn} from './types/field-validator-fn';
 import {parse} from 'node:path';
 import {GetJsonFileResponse} from './types/get-json-file-response';
+import {AssignedElementRule} from './types/assigned-element-rule';
 
 interface CreateDocRawResponse {
     docs: DocRaw[];
@@ -22,6 +23,14 @@ interface CreateDocRawResponse {
 type AnyValidation = {
     fields: Record<string, { required: boolean; fieldValidators: FieldValidatorFn[] }>;
     order: readonly string[];
+    crossFieldChecks: readonly AnyCrossFieldRule[];
+    elementValidator: Partial<Record<string, AssignedElementRule>>;
+};
+
+type AnyCrossFieldRule = {
+    fieldName: string;
+    dependsOnFields: readonly string[];
+    check: (value: string | undefined, deps: Record<string, string | undefined>) => string | null;
 };
 
 
@@ -33,10 +42,30 @@ export class DocumentsService {
     private readonly docs: Doc[] = [];
 
     private readonly docValidation: DocValidation = {
-        [DOC_TYPE.HEAD]: {fields: headSchema, order: headFieldOrder},
-        [DOC_TYPE.POS]: {fields: posSchema, order: posFieldOrder},
-        [DOC_TYPE.ALC]: {fields: alcSchema, order: alcFieldOrder},
-        [DOC_TYPE.TEXT]: {fields: textSchema, order: textFieldOrder},
+        [DOC_TYPE.HEAD]: {
+            fields: headSchema,
+            order: headFieldOrder,
+            crossFieldChecks: headCrossFieldChecks,
+            elementValidator: headElementValidators
+        },
+        [DOC_TYPE.POS]: {
+            fields: posSchema,
+            order: posFieldOrder,
+            crossFieldChecks: posCrossFieldChecks,
+            elementValidator: posElementValidators
+        },
+        [DOC_TYPE.ALC]: {
+            fields: alcSchema,
+            order: alcFieldOrder,
+            crossFieldChecks: alcCrossFieldChecks,
+            elementValidator: {}
+        },
+        [DOC_TYPE.TEXT]: {
+            fields: textSchema,
+            order: textFieldOrder,
+            crossFieldChecks: [],
+            elementValidator: {}
+        },
     };
 
     public uploadFile(file: Express.Multer.File): Doc[] {
@@ -61,12 +90,14 @@ export class DocumentsService {
 
         // lines before the first HEAD belong to no document. Report them as one failed entry.
         if (noHead.length > 0) {
+            const first = noHead[0];
             resultArr.push({
                 id: randomUUID(),
                 originalFileName: file.originalname,
                 isSuccess: false,
                 errorMsg: new DocumentError(
-                    noHead[0].lineNr,
+                    first.lineNr,
+                    first.type,
                     'Satz vor dem ersten HEAD. Er gehört zu keinem Beleg.',
                 ).message,
             });
@@ -182,7 +213,7 @@ export class DocumentsService {
             const id = randomUUID();
             try {
                 // this will throw document specific error if something fails
-                const data = this.createAndValidateDoc(docRaw);
+                const data = this.createAndValidateHeadDoc(docRaw);
                 docs.push({id, originalFileName, isSuccess: true, data});
             } catch (err: unknown) {
                 if (!(err instanceof DocumentError)) {
@@ -204,14 +235,17 @@ export class DocumentsService {
      * @param docRaw
      * @private
      */
-    private createAndValidateDoc(docRaw: DocRaw): HeadJson {
+    private createAndValidateHeadDoc(docRaw: DocRaw): HeadJson {
         // has unknown types. Throw error.
         if (docRaw.unknownLines?.length) {
             const unknown = docRaw.unknownLines[0];
-            throw new DocumentError(unknown.lineNr, `Unbekannte Satzart "${unknown.type}".`);
+            throw new DocumentError(unknown.lineNr, docRaw.type, `Unbekannte Satzart "${unknown.type}".`);
         }
 
-        // TODO: validateDocType(docRaw) (min/max counts) will be called here.
+        this.validateAssignedElements(docRaw);
+        for (const pos of docRaw.pos ?? []) {
+            this.validateAssignedElements(pos);
+        }
 
         // create and validate head.
         const head = this.validateDocRawAndCreateRecord(docRaw);
@@ -243,35 +277,35 @@ export class DocumentsService {
 
     /**
      * Validates the DocRaw and its fields
-     * @param record
      * @private
      * @return returns the record with field and value. Important: this is loosely typed but our checks will make it fit the corresponding interface.
      */
-    private validateDocRawAndCreateRecord(record: DocRaw): Record<string, string> {
-        const schema = this.getSchema(record.type);
+    private validateDocRawAndCreateRecord(docRaw: DocRaw): Record<string, string> {
+        const schema = this.getSchema(docRaw.type);
         if (!schema) {
-            throw new DocumentError(record.lineNr, `Unbekannte Satzart "${record.type}".`);
+            throw new DocumentError(docRaw.lineNr, docRaw.type, `Unbekannte Satzart "${docRaw.type}".`);
         }
 
         // too few or too many fields. Throw error.
-        if (record.fields.length !== schema.order.length) {
+        if (docRaw.fields.length !== schema.order.length) {
             throw new DocumentError(
-                record.lineNr,
-                `${record.type} hat ${record.fields.length} Felder, erwartet werden ${schema.order.length}.`,
+                docRaw.lineNr,
+                docRaw.type,
+                `${docRaw.type} hat ${docRaw.fields.length} Felder, erwartet werden ${schema.order.length}.`,
             );
         }
 
-        const json: Record<string, string> = {RECID: record.type};
+        const json: Record<string, string> = {RECID: docRaw.type};
 
         // iterate over order with index and fieldName. Index is the position in fields.
         for (const [index, fieldName] of schema.order.entries()) {
             const rule = schema.fields[fieldName];
-            const value = record.fields[index];
+            const value = docRaw.fields[index];
 
             // value is empty. Required -> error, optional -> skip.
             if (value === '') {
                 if (rule.required) {
-                    throw new DocumentError(record.lineNr, `${fieldName}: Pflichtfeld fehlt.`);
+                    throw new DocumentError(docRaw.lineNr, docRaw.type, `${fieldName}: Pflichtfeld fehlt.`);
                 }
                 continue;
             }
@@ -280,13 +314,75 @@ export class DocumentsService {
             for (const validator of rule.fieldValidators) {
                 const error = validator(value);
                 if (error) {
-                    throw new DocumentError(record.lineNr, `${fieldName}: ${error}`);
+                    throw new DocumentError(docRaw.lineNr, docRaw.type, `${fieldName}: ${error}`);
                 }
             }
 
             json[fieldName] = value;
         }
 
+        for (const crossFieldCheck of schema.crossFieldChecks) {
+            const {
+                fieldName,
+                dependsOnFields,
+                check
+            } = crossFieldCheck;
+            const field = json[fieldName];
+            const deps: Record<string, string | undefined> = Object.fromEntries(
+                dependsOnFields.map((f) => [f, json[f]]),
+            );
+
+            const crossFieldError = check(field, deps);
+            if (crossFieldError) {
+                throw new DocumentError(docRaw.lineNr, docRaw.type, `${fieldName}: ${crossFieldError}`);
+            }
+        }
+
         return json;
+    }
+
+    // generated by claude. Comments added by me.
+    private validateAssignedElements(node: DocRaw): void {
+        const rules: Partial<Record<string, AssignedElementRule>> = this.getSchema(node.type)?.elementValidator ??
+            {};
+
+        for (const [type, rule] of Object.entries(rules)) {
+            // we don't know if rule is defined. If not we just continue.
+            if (!rule) {
+                continue;
+            }
+
+            const {min, max} = rule;
+            // get children of the specific type.
+            const list = this.getChildren(node, type as DOC_TYPE);
+
+            if (list.length < min) {
+                throw new DocumentError(
+                    node.lineNr,
+                    node.type,
+                    `Mindestens ${min} ${type}-Satz erforderlich, gefunden ${list.length}.`,
+                );
+            }
+
+            if (list.length > max) {
+                // error points to the first invalid list element.
+                throw new DocumentError(list[max].lineNr, type, `Höchstens ${max} ${type}-Sätze erlaubt.`);
+            }
+        }
+    }
+
+    private getChildren(node: DocRaw, type: DOC_TYPE): DocRaw[] {
+        switch (type) {
+            case DOC_TYPE.ALC:
+                return node.alcs;
+            case DOC_TYPE.POS:
+                return node.pos ?? [];
+            case DOC_TYPE.TEXT:
+                return node.texts;
+            case DOC_TYPE.HEAD:
+                throw new Error('getChildren() mit HEAD aufgerufen. HEAD ist kein valides Child.');
+            default:
+                throw new Error(`getChildren() mit unbekanntem Typ ${type satisfies never} aufgerufen.`);
+        }
     }
 }

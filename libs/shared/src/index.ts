@@ -6,3 +6,4 @@ export * from './lib/pos';
 export * from './lib/text';
 export * from './lib/alc';
 export * from './lib/doc-types';
+export * from './lib/to-number';

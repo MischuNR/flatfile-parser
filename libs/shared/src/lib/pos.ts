@@ -4,6 +4,7 @@ import {TextJson} from './text';
 import {AlcJson} from './alc';
 import {OptionalFieldValues} from './optional-field-values';
 import {SharedRequiredFields} from './shared-required-fields';
+import {DOC_TYPE} from "./doc-types";
 
 export type PosDocFields = RequiredPosDocFields | OptionalPosDocFields;
 
@@ -31,3 +32,5 @@ export type PosJson = RequiredFieldValues<SharedRequiredFields> &
         POS_TEXT: TextJson[];
         POS_ALC: AlcJson[];
     };
+
+export type PosElementDocTypes = DOC_TYPE.TEXT | DOC_TYPE.ALC;
