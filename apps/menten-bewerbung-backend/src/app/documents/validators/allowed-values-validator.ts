@@ -1,4 +1,4 @@
-import {FieldValidatorFn} from "../types/field-validator-fn";
+import {FieldValidatorFn} from '../types/field-validator-fn';
 
 export const allowedValuesValidator = (allowedValues: readonly string[]): FieldValidatorFn => (value: string): string | null => {
     if (!allowedValues.includes(value)) {

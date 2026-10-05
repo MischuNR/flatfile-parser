@@ -1,13 +1,11 @@
-import {FieldValidator} from "../types/field-validator";
+import {FieldValidator} from '../types/field-validator';
 import {
     FIELD_NAME,
-    OptionalPosDocFields,
     OptionalTextDocFields,
-    RequiredPosDocFields,
     RequiredTextDocFields, TextDocFields
-} from "shared";
-import {minValueLengthValidator} from "../validators/min-value-length-validator";
-import {maxValueLengthValidator} from "../validators/max-value-length-validator";
+} from 'shared';
+import {minValueLengthValidator} from '../validators/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/max-value-length-validator';
 
 export const textFieldOrder = [
     FIELD_NAME.OTXTXT1,

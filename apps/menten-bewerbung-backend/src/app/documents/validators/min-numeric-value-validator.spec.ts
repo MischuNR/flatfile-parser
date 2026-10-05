@@ -1,4 +1,4 @@
-import {minNumericValueValidator} from "./min-numeric-value-validator";
+import {minNumericValueValidator} from './min-numeric-value-validator';
 
 describe('minNumericValueValidator', () => {
     const validator = minNumericValueValidator(3);

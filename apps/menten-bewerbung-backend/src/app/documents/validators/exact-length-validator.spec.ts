@@ -1,4 +1,4 @@
-import {exactLengthValidator} from "./exact-length-validator";
+import {exactLengthValidator} from './exact-length-validator';
 
 describe('exactLengthValidator', () => {
     const validator = exactLengthValidator(3);

@@ -1,9 +1,9 @@
-import {FIELD_NAME} from "./field-name";
-import {RequiredFieldValues} from "./required-field-values";
-import {TextJson} from "./text";
-import {AlcJson} from "./alc";
-import {OptionalFieldValues} from "./optional-field-values";
-import {SharedRequiredFields} from "./shared-required-fields";
+import {FIELD_NAME} from './field-name';
+import {RequiredFieldValues} from './required-field-values';
+import {TextJson} from './text';
+import {AlcJson} from './alc';
+import {OptionalFieldValues} from './optional-field-values';
+import {SharedRequiredFields} from './shared-required-fields';
 
 export type PosDocFields = RequiredPosDocFields | OptionalPosDocFields;
 

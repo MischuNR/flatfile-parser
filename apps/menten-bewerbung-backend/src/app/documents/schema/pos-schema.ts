@@ -1,11 +1,11 @@
-import {FieldValidator} from "../types/field-validator";
-import {FIELD_NAME, HeadDocFields, OptionalPosDocFields, PosDocFields, RequiredPosDocFields} from "shared";
-import {intValidator} from "../validators/int-validator";
-import {minValueLengthValidator} from "../validators/min-value-length-validator";
-import {maxValueLengthValidator} from "../validators/max-value-length-validator";
-import {decimalValidator} from "../validators/decimal-validator";
-import {exactLengthValidator} from "../validators/exact-length-validator";
-import {minNumericValueValidator} from "../validators/min-numeric-value-validator";
+import {FieldValidator} from '../types/field-validator';
+import {FIELD_NAME, OptionalPosDocFields, PosDocFields, RequiredPosDocFields} from 'shared';
+import {intValidator} from '../validators/int-validator';
+import {minValueLengthValidator} from '../validators/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/max-value-length-validator';
+import {decimalValidator} from '../validators/decimal-validator';
+import {exactLengthValidator} from '../validators/exact-length-validator';
+import {minNumericValueValidator} from '../validators/min-numeric-value-validator';
 
 export const posFieldOrder = [
     FIELD_NAME.OPOLDF,

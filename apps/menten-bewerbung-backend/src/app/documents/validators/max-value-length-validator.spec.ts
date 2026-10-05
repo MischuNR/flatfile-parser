@@ -1,4 +1,4 @@
-import {maxValueLengthValidator} from "./max-value-length-validator";
+import {maxValueLengthValidator} from './max-value-length-validator';
 
 describe('maxValueLengthValidator', () => {
     const validator = maxValueLengthValidator(3);

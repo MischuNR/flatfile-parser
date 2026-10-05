@@ -1,4 +1,4 @@
-import {HeadJson} from "./head";
+import {HeadJson} from './head';
 
 export interface Doc {
     id: string;

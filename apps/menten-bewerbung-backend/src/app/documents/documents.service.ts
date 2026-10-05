@@ -1,11 +1,11 @@
 import {Injectable} from '@nestjs/common';
-import {decodeFile} from "../../utils/decode-file";
-import {Doc, DOC_TYPE, FIELD_NAME} from "shared";
-import {DocValidation} from "./types/doc-validation";
-import {headFieldOrder, headSchema} from "./schema/head-schema";
-import {alcFieldOrder, alcSchema} from "./schema/alc-schema";
-import {posFieldOrder, posSchema} from "./schema/pos-schema";
-import {textFieldOrder, textSchema} from "./schema/text-schema";
+import {decodeFile} from '../../utils/decode-file';
+import {Doc, DOC_TYPE} from 'shared';
+import {DocValidation} from './types/doc-validation';
+import {headFieldOrder, headSchema} from './schema/head-schema';
+import {alcFieldOrder, alcSchema} from './schema/alc-schema';
+import {posFieldOrder, posSchema} from './schema/pos-schema';
+import {textFieldOrder, textSchema} from './schema/text-schema';
 
 @Injectable()
 export class DocumentsService {
@@ -30,16 +30,16 @@ export class DocumentsService {
         }
     };
 
-    uploadFile(file: Express.Multer.File) {
+    public uploadFile(file: Express.Multer.File) {
         const fileContents = decodeFile(file);
         return 'This action adds a new document';
     }
 
-    getAllDocuments(): Doc[] {
+    public getAllDocuments(): Doc[] {
         return [];
     }
 
-    getJsonForId(id: string) {
-
+    public getJsonForId(id: string): null {
+        return null;
     }
 }

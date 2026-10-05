@@ -1,11 +1,11 @@
-import {FIELD_NAME, HeadDocFields, OptionalHeadDocFields, RequiredHeadDocFields} from "shared";
-import {FieldValidator} from "../types/field-validator";
-import {minValueLengthValidator} from "../validators/min-value-length-validator";
-import {maxValueLengthValidator} from "../validators/max-value-length-validator";
-import {dateValidator} from "../validators/date-validator";
-import {exactLengthValidator} from "../validators/exact-length-validator";
-import {decimalValidator} from "../validators/decimal-validator";
-import {allowedValuesValidator} from "../validators/allowed-values-validator";
+import {FIELD_NAME, HeadDocFields, OptionalHeadDocFields, RequiredHeadDocFields} from 'shared';
+import {FieldValidator} from '../types/field-validator';
+import {minValueLengthValidator} from '../validators/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/max-value-length-validator';
+import {dateValidator} from '../validators/date-validator';
+import {exactLengthValidator} from '../validators/exact-length-validator';
+import {decimalValidator} from '../validators/decimal-validator';
+import {allowedValuesValidator} from '../validators/allowed-values-validator';
 
 export const headFieldOrder  = [
     FIELD_NAME.OHTRCP,

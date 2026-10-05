@@ -1,4 +1,4 @@
-import {intValidator} from "./int-validator";
+import {intValidator} from './int-validator';
 
 describe('intValidator', () => {
     const validator = intValidator;

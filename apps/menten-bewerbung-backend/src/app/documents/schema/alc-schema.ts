@@ -1,10 +1,10 @@
-import {FieldValidator} from "../types/field-validator";
-import {AlcDocFields, FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields} from "shared";
-import {exactLengthValidator} from "../validators/exact-length-validator";
-import {minValueLengthValidator} from "../validators/min-value-length-validator";
-import {maxValueLengthValidator} from "../validators/max-value-length-validator";
-import {decimalValidator} from "../validators/decimal-validator";
-import {allowedValuesValidator} from "../validators/allowed-values-validator";
+import {FieldValidator} from '../types/field-validator';
+import {AlcDocFields, FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields} from 'shared';
+import {exactLengthValidator} from '../validators/exact-length-validator';
+import {minValueLengthValidator} from '../validators/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/max-value-length-validator';
+import {decimalValidator} from '../validators/decimal-validator';
+import {allowedValuesValidator} from '../validators/allowed-values-validator';
 
 export const alcFieldOrder = [
     FIELD_NAME.OZAKZA,

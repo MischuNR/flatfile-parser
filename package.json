@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start:frontend": "nx serve menten-bewerbung-frontend",
+    "lint:frontend": "nx lint menten-bewerbung-frontend",
     "start:backend": "nx serve menten-bewerbung-backend",
-    "test:validators": "nx test menten-bewerbung-backend validators/"
+    "lint:backend": "nx lint menten-bewerbung-backend",
+    "test:validators": "nx test menten-bewerbung-backend validators/",
+    "lint:shared": "nx lint shared"
   },
   "repository": {
     "type": "git",
@@ -40,6 +43,7 @@
     "@nx/web": "23.2.1",
     "@nx/webpack": "23.2.1",
     "@schematics/angular": "~22.1.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@swc/helpers": "~0.5.18",
     "@types/jest": "~30.0.0",
     "@types/multer": "^2.3.0",
@@ -48,6 +52,7 @@
     "angular-eslint": "^22.1.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "jest": "~30.3.0",
     "jest-environment-node": "~30.3.0",
     "jest-util": "~30.3.0",

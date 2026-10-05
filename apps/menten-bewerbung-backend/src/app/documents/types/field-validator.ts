@@ -1,4 +1,4 @@
-import {FieldValidatorFn} from "./field-validator-fn";
+import {FieldValidatorFn} from './field-validator-fn';
 
 /**
  * Some fields are required some not. To enforce type safety required fields expect true and optional fields false.

@@ -1,7 +1,7 @@
-import {FIELD_NAME} from "./field-name";
-import {RequiredFieldValues} from "./required-field-values";
-import {OptionalFieldValues} from "./optional-field-values";
-import {SharedRequiredFields} from "./shared-required-fields";
+import {FIELD_NAME} from './field-name';
+import {RequiredFieldValues} from './required-field-values';
+import {OptionalFieldValues} from './optional-field-values';
+import {SharedRequiredFields} from './shared-required-fields';
 
 export type TextDocFields = RequiredTextDocFields | OptionalTextDocFields;
 

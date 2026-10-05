@@ -5,9 +5,9 @@ import {
     RequiredHeadDocFields,
     RequiredPosDocFields,
     OptionalAlcDocFields, RequiredAlcDocFields, RequiredTextDocFields, OptionalTextDocFields, HeadDocFields,
-    PosDocFields, TextDocFields
-} from "shared";
-import {FieldValidator} from "./field-validator";
+    PosDocFields, TextDocFields, AlcDocFields
+} from 'shared';
+import {FieldValidator} from './field-validator';
 
 /**
  * This type is the structure for field validation test.
@@ -23,7 +23,7 @@ export type DocValidation = {
     };
     [DOC_TYPE.ALC]: {
         fields: FieldValidator<RequiredAlcDocFields, OptionalAlcDocFields>,
-        order: any
+        order: readonly AlcDocFields[],
     };
     [DOC_TYPE.TEXT]: {
         fields: FieldValidator<RequiredTextDocFields, OptionalTextDocFields>,
