@@ -9,8 +9,8 @@ import {minValueLengthValidator} from '../validators/min-value-length-validator'
 import {maxValueLengthValidator} from '../validators/max-value-length-validator';
 import {decimalValidator} from '../validators/decimal-validator';
 import {minNumericValueValidator} from '../validators/min-numeric-value-validator';
-import {CrossFieldRule} from "../types/doc-validation";
-import {ElementValidators} from "../types/assigned-element-rule";
+import {CrossFieldRule} from '../types/doc-validation';
+import {ElementValidators} from '../types/assigned-element-rule';
 
 export const posFieldOrder = [
     FIELD_NAME.OPOLDF,

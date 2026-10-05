@@ -5,8 +5,8 @@ import {minValueLengthValidator} from '../validators/min-value-length-validator'
 import {maxValueLengthValidator} from '../validators/max-value-length-validator';
 import {decimalValidator} from '../validators/decimal-validator';
 import {allowedValuesValidator} from '../validators/allowed-values-validator';
-import {minNumericValueValidator} from "../validators/min-numeric-value-validator";
-import {CrossFieldRule} from "../types/doc-validation";
+import {minNumericValueValidator} from '../validators/min-numeric-value-validator';
+import {CrossFieldRule} from '../types/doc-validation';
 
 export const alcFieldOrder = [
     FIELD_NAME.OZAKZA,
