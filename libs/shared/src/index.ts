@@ -9,3 +9,4 @@ export * from './lib/doc-types';
 export * from './lib/to-number';
 export * from './lib/required-field-values';
 export * from './lib/base-record-json';
+export * from './lib/cent-tolerance';

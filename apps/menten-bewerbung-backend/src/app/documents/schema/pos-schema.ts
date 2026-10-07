@@ -1,5 +1,6 @@
 import {FieldValidator} from '../types/field-validator';
 import {
+    centTolerance,
     DOC_TYPE,
     FIELD_NAME,
     OptionalPosDocFields, PosDocFields, PosElementDocTypes, RequiredPosDocFields, toNumber
@@ -193,7 +194,7 @@ export const posCrossFieldChecks: CrossFieldRule<PosDocFields>[] = [
             const expected = toNumber(OPOBEM) * (toNumber(OPOEIP) / priceBase) + surcharge;
 
             // Floats are inexact and the example file rounds to 2 decimals, so we allow a small tolerance.
-            const isSame = Math.abs(toNumber(pob) - expected) < 0.005;
+            const isSame = Math.abs(toNumber(pob) - expected) < centTolerance;
 
             return isSame
                 ? null
