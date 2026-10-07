@@ -55,7 +55,8 @@ export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocField
         fieldValidators: [
             minValueLengthValidator(4),
             maxValueLengthValidator(15),
-            decimalValidator(11, 2)
+            decimalValidator(11, 2),
+            minNumericValueValidator(0)
         ]
     },
     [FIELD_NAME.OZAMWS]: {
@@ -73,7 +74,7 @@ export const alcCrossFieldChecks: CrossFieldRule<AlcDocFields>[] = [
     {
         fieldName: FIELD_NAME.OZAPROB,
         dependsOnFields: [FIELD_NAME.OZAPRO],
-        // OZAPROB Pflicht, wenn OZAPRO gesetzt und ungleich 0
+        // OZAPROB only mandatory if OZAPRO !== 0
         check: (basis, {OZAPRO}) =>
             !basis && OZAPRO && toNumber(OZAPRO) !== 0
                 ? 'Die Berechnungsbasis fehlt, obwohl ein Prozentsatz gesetzt ist.'

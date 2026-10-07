@@ -55,6 +55,7 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
         ]
     },
     [FIELD_NAME.OPOZTN]: {
+        // @ts-ignore
         required: true,
         fieldValidators: [
             minValueLengthValidator(1),
@@ -79,10 +80,8 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
     [FIELD_NAME.OPOBEE]: {
         required: false,
         fieldValidators: [
-            // TODO: confirm this is ok
-            minValueLengthValidator(2),
+            minValueLengthValidator(1),
             maxValueLengthValidator(3),
-            // exactLengthValidator(3)
         ]
     },
     [FIELD_NAME.OPOMOB]: {
@@ -96,10 +95,8 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
     [FIELD_NAME.OPOMOE]: {
         required: false,
         fieldValidators: [
-            // TODO: confirm this is ok
-            minValueLengthValidator(2),
+            minValueLengthValidator(1),
             maxValueLengthValidator(3),
-            // exactLengthValidator(3)
         ]
     },
     [FIELD_NAME.OPOPOB]: {
@@ -129,10 +126,8 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
     [FIELD_NAME.OPOEIPE]: {
         required: true,
         fieldValidators: [
-            // TODO: confirm this is ok
-            minValueLengthValidator(2),
+            minValueLengthValidator(1),
             maxValueLengthValidator(3),
-            // exactLengthValidator(3)
         ]
     },
     [FIELD_NAME.OPOEIPB]: {

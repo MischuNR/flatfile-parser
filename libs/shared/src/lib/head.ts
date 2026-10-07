@@ -4,8 +4,8 @@ import {PosJson} from './pos';
 import {TextJson} from './text';
 import {AlcJson} from './alc';
 import {OptionalFieldValues} from './optional-field-values';
-import {SharedRequiredFields} from './shared-required-fields';
 import {DOC_TYPE} from './doc-types';
+import {BaseRecordJson} from './base-record-json';
 
 export type HeadDocFields = RequiredHeadDocFields | OptionalHeadDocFields;
 
@@ -59,7 +59,7 @@ export type OptionalHeadDocFields = FIELD_NAME.OHTLN1 |
     FIELD_NAME.OHTPDF;
 
 
-export type HeadJson = RequiredFieldValues<SharedRequiredFields> &
+export type HeadJson = BaseRecordJson &
     RequiredFieldValues<RequiredHeadDocFields> &
     OptionalFieldValues<OptionalHeadDocFields> &
     {
