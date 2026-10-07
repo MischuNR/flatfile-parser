@@ -10,3 +10,4 @@ export * from './lib/to-number';
 export * from './lib/required-field-values';
 export * from './lib/base-record-json';
 export * from './lib/cent-tolerance';
+export * from './lib/file-interceptor-key-name';

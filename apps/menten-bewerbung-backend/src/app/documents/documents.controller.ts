@@ -1,7 +1,7 @@
 import {Controller, Get, Post, Param, UseInterceptors, UploadedFile, BadRequestException, Res} from '@nestjs/common';
 import {DocumentsService} from './documents.service';
 import {FileInterceptor} from '@nestjs/platform-express';
-import {Doc, documentBaseRoute, documentGetJsonFileRoute} from 'shared';
+import {Doc, documentBaseRoute, documentGetJsonFileRoute, fileInterceptorKeyName} from 'shared';
 import type {Response} from 'express';
 
 @Controller(documentBaseRoute)
@@ -10,7 +10,7 @@ export class DocumentsController {
     }
 
     @Post()
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor(fileInterceptorKeyName))
     public uploadFile(@UploadedFile() file?: Express.Multer.File) {
         if (!file) {
             throw new BadRequestException(`Das Feld 'file' ist nicht gesetzt. Eine Datei muss geschickt werden.`);

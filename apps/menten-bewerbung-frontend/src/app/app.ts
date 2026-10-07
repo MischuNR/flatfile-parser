@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import {DocumentsStore} from './store/documents.store';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'menten-bewerbung-frontend';
+    protected readonly store = inject(DocumentsStore);
+
+    constructor() {
+        this.store.load();
+    }
+
 }

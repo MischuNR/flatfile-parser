@@ -1,2 +1,14 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+@if (store.isLoadingDocuments()) {
+    <div role="status" aria-live="polite">Lade Dokumente...</div>
+} @else {
+    @if(store.loadDocumentsError(); as error) {
+    <p>
+        Beim Laden der Daten ist ein Fehler aufgetreten:
+        <br>
+        {{error.message}}
+    </p>
+    <button (click)="store.load()">Erneut versuchen</button>
+    } @else {
+        <router-outlet></router-outlet>
+    }
+}
