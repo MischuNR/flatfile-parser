@@ -6,9 +6,10 @@
 
 <div class="list-wrapper">
     @if (!store.documents().length) {
-        <p>Es existieren noch keine Belege</p>
+        <p role="status">Es existieren noch keine Belege</p>
     } @else {
         <table>
+            <caption class="visually-hidden">Belegliste</caption>
             <thead>
             <tr>
                 <th>Status</th>
@@ -16,7 +17,7 @@
                 <th>Empfänger</th>
                 <th>Belegdatum</th>
                 <th>Gesamtbetrag</th>
-                <th></th>
+                <th><span class="visually-hidden">Aktionen</span></th>
             </tr>
             </thead>
             <tbody>
@@ -28,16 +29,16 @@
                             <td>{{ document.data?.OHTLN1 ?? '-' }}</td>
                             <td>{{ document.data?.OHTDOD ?? '-' }}</td>
                             <td>{{ document.data?.OHTGES ?? '-' }}</td>
-                            <td>
-                                <a [routerLink]="['/documents', document.id]">Details</a>
-                            </td>
                         } @else {
-                            <td colspan="5">{{ document.errorMsg }}</td>
+                            <td colspan="4">{{ document.errorMsg }}</td>
                         }
+                        <td>
+                            <a [routerLink]="['/documents', document.id]" [attr.aria-label]="'Details zu Beleg ' + (document.data?.OHTDON ?? document.id)">Details</a>
+                        </td>
                     </tr>
                 } @empty {
                     <tr>
-                        <td colspan="6">Keine passenden Belege gefunden.</td>
+                        <td colspan="6" role="status">Keine passenden Belege gefunden.</td>
                     </tr>
                 }
             </tbody>
