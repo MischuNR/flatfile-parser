@@ -1,0 +1,16 @@
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 0 0 16px;
+}
+
+dt {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+dd {
+  margin: 0;
+  word-break: break-word;
+}

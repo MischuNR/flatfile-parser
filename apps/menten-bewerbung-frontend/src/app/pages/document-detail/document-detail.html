@@ -1,1 +1,56 @@
-<p>document-detail works!</p>
+<a [routerLink]="['/documents']">Zurück</a>
+
+<div class="document-outer-wrapper">
+    @let doc = document();
+    @if (doc) {
+        @if (doc.isSuccess && doc.data) {
+            @if (jsonUrl()) {
+                <a [href]="jsonUrl()" download>JSON herunterladen</a>
+            }
+
+            <div class="document-inner-wrapper">
+                <h2>Kopfdaten</h2>
+                <app-record-fields [record]="doc.data"></app-record-fields>
+
+                @if (doc.data.HEAD_TEXT.length) {
+                    <h2>Kopftexte</h2>
+                    @for (t of doc.data.HEAD_TEXT; track $index) {
+                        <app-record-fields [record]="t"></app-record-fields>
+                    }
+                }
+
+                @if (doc.data.HEAD_ALC.length) {
+                    <h2>Kopf-Rabatte/Zuschläge</h2>
+                    @for (a of doc.data.HEAD_ALC; track $index) {
+                        <app-record-fields [record]="a"></app-record-fields>
+                    }
+                }
+
+                <h2>Positionen</h2>
+                @for (p of doc.data.POS; track p.OPOLDF) {
+                    <section class="position">
+                        <h3>Position {{ p.OPOLDF }}</h3>
+                        <app-record-fields [record]="p"></app-record-fields>
+                        @if (p.POS_TEXT.length) {
+                            <h4>Positionstexte</h4>
+                            @for (t of p.POS_TEXT; track $index) {
+                                <app-record-fields [record]="t"></app-record-fields>
+                            }
+                        }
+                        @if (p.POS_ALC.length) {
+                            <h4>Positions-Rabatte/Zuschläge</h4>
+                            @for (a of p.POS_ALC; track $index) {
+                                <app-record-fields [record]="a"></app-record-fields>
+                            }
+                        }
+                    </section>
+                }
+            </div>
+        } @else {
+            <p role="alert">{{ doc.errorMsg }}</p>
+        }
+    } @else {
+        <p>Beleg nicht gefunden</p>
+    }
+</div>
+
