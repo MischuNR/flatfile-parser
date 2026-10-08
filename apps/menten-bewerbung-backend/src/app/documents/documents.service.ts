@@ -397,13 +397,7 @@ export class DocumentsService {
     }
 
     private validatePosFields(rawPositions: DocRaw[], positions: PosJson[]): void {
-        positions.forEach((position, i) => {
-            // rawPositions[i] was used to build positions[i], so we can access rawPositions for the line number.
-            const raw = rawPositions[i];
-            if (position.OPOLDF !== String(i + 1)) {
-                throw new DocumentError(raw.lineNr, raw.type, `OPOLDF: Erwartet ${i + 1}, gefunden ${position.OPOLDF}.`);
-            }
-        });
+        this.validatePosOpoldf(rawPositions, positions);
     }
 
     private validateHeadJson(headRaw: DocRaw, headJson: HeadJson): void {
@@ -468,6 +462,19 @@ export class DocumentsService {
                     throw new DocumentError(rawAlc.lineNr, rawAlc.type, message('OZAMWS'));
                 }
             });
+        });
+    }
+
+    private validatePosOpoldf(rawPositions: DocRaw[], positions: PosJson[]): void {
+        let previousId = 0;
+        positions.forEach((position, i) => {
+            // rawPositions[i] was used to build positions[i], so we can access rawPositions for the line number.
+            const raw = rawPositions[i];
+            const opoldfNumber = Number(position.OPOLDF);
+            if (opoldfNumber <= previousId) {
+                throw new DocumentError(raw.lineNr, raw.type, `OPOLDF: Muss aufsteigend und eindeutig sein. Gefunden ${opoldfNumber}, grösser als ${previousId} erwartet.`);
+            }
+            previousId = opoldfNumber;
         });
     }
 }

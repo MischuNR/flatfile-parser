@@ -56,8 +56,7 @@ export const posSchema: FieldValidator<RequiredPosDocFields, OptionalPosDocField
         ]
     },
     [FIELD_NAME.OPOZTN]: {
-        // @ts-ignore
-        required: true,
+        required: false,
         fieldValidators: [
             minValueLengthValidator(1),
             maxValueLengthValidator(35),
