@@ -1,0 +1,10 @@
+<label for="file-upload">Datei hochladen</label>
+<input id="file-upload" type="file" [disabled]="store.isUploading()" (change)="uploadFile($event)">
+
+@if (store.isUploading()) {
+    <span role="status" aria-live="polite">Datei wird hochgeladen...</span>
+}
+
+@if (store.uploadError(); as error) {
+    <span role="alert">Beim Hochladen ist ein Fehler aufgetreten: {{ error.message }}</span>
+}

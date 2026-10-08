@@ -1,0 +1,18 @@
+<label for="status-filter">Status filtern</label>
+<select id="status-filter" (change)="changeStatusFilter($event)">
+    @for (statusFilter of statusFilterArr; track statusFilter.value) {
+        <option [value]="statusFilter.value"
+                [selected]="store.statusFilter() === statusFilter.value">{{ statusFilter.label }}
+        </option>
+    }
+</select>
+<input type="text"
+       [value]="store.documentNumberFilter()"
+       placeholder="Belegnummer"
+       aria-label="Nach Belegnummer filtern"
+       (input)="changeFilter($event)">
+<input type="text"
+       [value]="store.recipientFilter()"
+       placeholder="Empfänger"
+       aria-label="Nach Empfänger filtern"
+       (input)="changeRecipientFilter($event)">

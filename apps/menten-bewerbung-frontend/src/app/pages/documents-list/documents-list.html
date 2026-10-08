@@ -1,41 +1,46 @@
 <div class="header">
-    <div class="filter">
-        <label for="status-filter">Status filtern</label>
-        <select id="status-filter" (change)="changeStatusFilter($event)">
-            @for (statusFilter of statusFilterArr; track statusFilter.value) {
-                <option [value]="statusFilter.value" [selected]="store.statusFilter() === statusFilter.value">{{ statusFilter.label }}</option>
-            }
-        </select>
-        <input type="text"
-               [value]="store.documentNumberFilter()"
-               placeholder="Belegnummer"
-               aria-label="Nach Belegnummer filtern"
-               (input)="changeFilter($event)">
-        <input type="text"
-               [value]="store.recipientFilter()"
-               placeholder="Empfänger"
-               aria-label="Nach Empfänger filtern"
-               (input)="changeRecipientFilter($event)">
-    </div>
+    <app-document-list-filter></app-document-list-filter>
 
-    <div class="upload-wrapper">
-        @if (store.isUploading()) {
-            <div aria-live="polite">Datei wird hochgeladen...</div>
-        } @else {
-            <label for="file-upload">Datei hochladen</label>
-            <input id="file-upload" type="file" [disabled]="store.isUploading()" (change)="uploadFile($event)">
-        }
-    </div>
+    <app-upload-document></app-upload-document>
 </div>
 
 <div class="list-wrapper">
     @if (!store.documents().length) {
         <p>Es existieren noch keine Belege</p>
     } @else {
-        @for (document of store.filteredDocuments(); track document.id) {
-            {{ document | json }}
-        } @empty {
-            <p>Keine passenden Belege vorhanden</p>
-        }
+        <table>
+            <thead>
+            <tr>
+                <th>Status</th>
+                <th>Belegnummer</th>
+                <th>Empfänger</th>
+                <th>Belegdatum</th>
+                <th>Gesamtbetrag</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                @for (document of store.filteredDocuments(); track document.id) {
+                    <tr [class.error]="!document.isSuccess">
+                        <td>{{ document.isSuccess ? 'OK' : 'FEHLERHAFT' }}</td>
+                        @if (document.isSuccess) {
+                            <td>{{ document.data?.OHTDON ?? '-' }}</td>
+                            <td>{{ document.data?.OHTLN1 ?? '-' }}</td>
+                            <td>{{ document.data?.OHTDOD ?? '-' }}</td>
+                            <td>{{ document.data?.OHTGES ?? '-' }}</td>
+                            <td>
+                                <a [routerLink]="['/documents', document.id]">Details</a>
+                            </td>
+                        } @else {
+                            <td colspan="5">{{ document.errorMsg }}</td>
+                        }
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="6">Keine passenden Belege gefunden.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 </div>
