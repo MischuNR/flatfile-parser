@@ -1,13 +1,21 @@
 /**
  * DocRaw is a flexible format that applies to all types (HEAD, POS, ALC, TEXT, ...) and tries to order them.
- * HEAD and POS are main types and will have ALC and TEXT. POS is only set on HEAD.
  */
 export interface DocRaw {
     type: string;
     lineNr: number;
     fields: string[];
-    texts: DocRaw[];
-    alcs: DocRaw[];
+    /**
+     * Only set on POS and HEAD
+     */
+    texts?: DocRaw[];
+    /**
+     * Only set on POS and HEAD
+     */
+    alcs?: DocRaw[];
+    /**
+     * Only set on HEAD
+     */
     pos?: DocRaw[];
     /**
      * Types that can't be assigned.

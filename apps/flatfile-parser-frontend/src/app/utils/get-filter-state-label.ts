@@ -9,6 +9,6 @@ export function getStatusLabel(state: STATUS_FILTER) {
         case STATUS_FILTER.OK:
             return 'Korrekte';
         default:
-            throw new Error(`Unknown state: ${state satisfies never}`);
+            throw new Error(`Unbekannter Status: ${state satisfies never}`);
     }
 }
