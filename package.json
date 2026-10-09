@@ -6,9 +6,9 @@
   "scripts": {
     "start:frontend": "nx serve menten-bewerbung-frontend",
     "lint:frontend": "nx lint menten-bewerbung-frontend",
-    "start:backend": "nx serve menten-bewerbung-backend",
-    "lint:backend": "nx lint menten-bewerbung-backend",
-    "test:validators": "nx test menten-bewerbung-backend validators/",
+    "start:backend": "nx serve flatfile-parser-backend",
+    "lint:backend": "nx lint flatfile-parser-backend",
+    "test:validators": "nx test flatfile-parser-backend validators/",
     "lint:shared": "nx lint shared"
   },
   "repository": {

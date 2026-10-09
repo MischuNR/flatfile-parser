@@ -1,7 +1,7 @@
 {
-  "name": "menten-bewerbung-backend",
+  "name": "flatfile-parser-backend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/menten-bewerbung-backend/src",
+  "sourceRoot": "apps/flatfile-parser-backend/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -12,8 +12,8 @@
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
-        "{workspaceRoot}/dist/apps/menten-bewerbung-backend/package.json",
-        "{workspaceRoot}/dist/apps/menten-bewerbung-backend/package-lock.json"
+        "{workspaceRoot}/dist/apps/flatfile-parser-backend/package.json",
+        "{workspaceRoot}/dist/apps/flatfile-parser-backend/package-lock.json"
       ],
       "options": {
         "buildTarget": "build"
@@ -25,7 +25,7 @@
       ],
       "cache": true,
       "outputs": [
-        "{workspaceRoot}/dist/apps/menten-bewerbung-backend/workspace_modules"
+        "{workspaceRoot}/dist/apps/flatfile-parser-backend/workspace_modules"
       ],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
@@ -47,15 +47,15 @@
         "build"
       ],
       "options": {
-        "buildTarget": "menten-bewerbung-backend:build",
+        "buildTarget": "flatfile-parser-backend:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "menten-bewerbung-backend:build:development"
+          "buildTarget": "flatfile-parser-backend:build:development"
         },
         "production": {
-          "buildTarget": "menten-bewerbung-backend:build:production"
+          "buildTarget": "flatfile-parser-backend:build:production"
         }
       }
     },
