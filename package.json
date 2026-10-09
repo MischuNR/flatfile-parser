@@ -4,8 +4,8 @@
   "description": "Aufgabe für die Bewerbung bei der menten GmbH",
   "main": "index.js",
   "scripts": {
-    "start:frontend": "nx serve menten-bewerbung-frontend",
-    "lint:frontend": "nx lint menten-bewerbung-frontend",
+    "start:frontend": "nx serve flatfile-parser-frontend",
+    "lint:frontend": "nx lint flatfile-parser-frontend",
     "start:backend": "nx serve flatfile-parser-backend",
     "lint:backend": "nx lint flatfile-parser-backend",
     "test:validators": "nx test flatfile-parser-backend validators/",

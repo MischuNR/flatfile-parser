@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
-import {ReactiveFormsModule} from "@angular/forms";
-import {STATUS_FILTER} from "../../../../types/status-filter";
-import {getStatusLabel} from "../../../../utils/get-filter-state-label";
-import {DocumentsStore} from "../../../../store/documents.store";
+import {ReactiveFormsModule} from '@angular/forms';
+import {STATUS_FILTER} from '../../../../types/status-filter';
+import {getStatusLabel} from '../../../../utils/get-filter-state-label';
+import {DocumentsStore} from '../../../../store/documents.store';
 
 @Component({
   selector: 'app-document-list-filter',

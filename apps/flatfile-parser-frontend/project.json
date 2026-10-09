@@ -1,9 +1,9 @@
 {
-  "name": "menten-bewerbung-frontend",
+  "name": "flatfile-parser-frontend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/menten-bewerbung-frontend/src",
+  "sourceRoot": "apps/flatfile-parser-frontend/src",
   "tags": [],
   "targets": {
     "build": {
@@ -13,18 +13,18 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/menten-bewerbung-frontend",
-        "browser": "apps/menten-bewerbung-frontend/src/main.ts",
-        "tsConfig": "apps/menten-bewerbung-frontend/tsconfig.app.json",
+        "outputPath": "dist/apps/flatfile-parser-frontend",
+        "browser": "apps/flatfile-parser-frontend/src/main.ts",
+        "tsConfig": "apps/flatfile-parser-frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/menten-bewerbung-frontend/public"
+            "input": "apps/flatfile-parser-frontend/public"
           }
         ],
         "styles": [
-          "apps/menten-bewerbung-frontend/src/styles.scss"
+          "apps/flatfile-parser-frontend/src/styles.scss"
         ]
       },
       "configurations": {
@@ -56,10 +56,10 @@
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
-          "buildTarget": "menten-bewerbung-frontend:build:production"
+          "buildTarget": "flatfile-parser-frontend:build:production"
         },
         "development": {
-          "buildTarget": "menten-bewerbung-frontend:build:development"
+          "buildTarget": "flatfile-parser-frontend:build:development"
         }
       }
     },
@@ -70,8 +70,8 @@
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "menten-bewerbung-frontend:build",
-        "staticFilePath": "dist/apps/menten-bewerbung-frontend/browser",
+        "buildTarget": "flatfile-parser-frontend:build",
+        "staticFilePath": "dist/apps/flatfile-parser-frontend/browser",
         "spa": true
       }
     }

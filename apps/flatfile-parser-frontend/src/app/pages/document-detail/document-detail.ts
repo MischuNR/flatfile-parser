@@ -4,7 +4,7 @@ import {DocumentsStore} from '../../store/documents.store';
 import {DocumentsService} from '../../services/documents.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
-import {RecordFields} from "./components/record-fields/record-fields";
+import {RecordFields} from './components/record-fields/record-fields';
 
 @Component({
   selector: 'app-document-detail',
