@@ -7,12 +7,12 @@ import {
     RequiredHeadDocFields
 } from 'shared';
 import {FieldValidator} from '../types/field-validator';
-import {minValueLengthValidator} from '../validators/min-value-length-validator';
-import {maxValueLengthValidator} from '../validators/max-value-length-validator';
-import {dateValidator} from '../validators/date-validator';
-import {exactLengthValidator} from '../validators/exact-length-validator';
-import {decimalValidator} from '../validators/decimal-validator';
-import {allowedValuesValidator} from '../validators/allowed-values-validator';
+import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
+import {dateValidator} from '../validators/fields/date-validator';
+import {exactLengthValidator} from '../validators/fields/exact-length-validator';
+import {decimalValidator} from '../validators/fields/decimal-validator';
+import {allowedValuesValidator} from '../validators/fields/allowed-values-validator';
 import {CrossFieldRule} from '../types/doc-validation';
 import {ElementValidators} from '../types/assigned-element-rule';
 

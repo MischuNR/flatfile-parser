@@ -5,11 +5,11 @@ import {
     FIELD_NAME,
     OptionalPosDocFields, PosDocFields, PosElementDocTypes, RequiredPosDocFields, toNumber
 } from 'shared';
-import {intValidator} from '../validators/int-validator';
-import {minValueLengthValidator} from '../validators/min-value-length-validator';
-import {maxValueLengthValidator} from '../validators/max-value-length-validator';
-import {decimalValidator} from '../validators/decimal-validator';
-import {minNumericValueValidator} from '../validators/min-numeric-value-validator';
+import {intValidator} from '../validators/fields/int-validator';
+import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
+import {decimalValidator} from '../validators/fields/decimal-validator';
+import {minNumericValueValidator} from '../validators/fields/min-numeric-value-validator';
 import {CrossFieldRule} from '../types/doc-validation';
 import {ElementValidators} from '../types/assigned-element-rule';
 

@@ -1,4 +1,4 @@
-import {FieldValidatorFn} from '../types/field-validator-fn';
+import {FieldValidatorFn} from '../../types/field-validator-fn';
 import {toNumber} from 'shared';
 
 /**

@@ -4,8 +4,8 @@ import {
     OptionalTextDocFields,
     RequiredTextDocFields, TextDocFields
 } from 'shared';
-import {minValueLengthValidator} from '../validators/min-value-length-validator';
-import {maxValueLengthValidator} from '../validators/max-value-length-validator';
+import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
 
 export const textFieldOrder = [
     FIELD_NAME.OTXTXT1,

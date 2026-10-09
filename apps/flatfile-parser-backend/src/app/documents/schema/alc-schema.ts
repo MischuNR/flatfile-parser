@@ -1,11 +1,11 @@
 import {FieldValidator} from '../types/field-validator';
 import {AlcDocFields, FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields, toNumber} from 'shared';
-import {exactLengthValidator} from '../validators/exact-length-validator';
-import {minValueLengthValidator} from '../validators/min-value-length-validator';
-import {maxValueLengthValidator} from '../validators/max-value-length-validator';
-import {decimalValidator} from '../validators/decimal-validator';
-import {allowedValuesValidator} from '../validators/allowed-values-validator';
-import {minNumericValueValidator} from '../validators/min-numeric-value-validator';
+import {exactLengthValidator} from '../validators/fields/exact-length-validator';
+import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
+import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
+import {decimalValidator} from '../validators/fields/decimal-validator';
+import {allowedValuesValidator} from '../validators/fields/allowed-values-validator';
+import {minNumericValueValidator} from '../validators/fields/min-numeric-value-validator';
 import {CrossFieldRule} from '../types/doc-validation';
 
 export const alcFieldOrder = [
