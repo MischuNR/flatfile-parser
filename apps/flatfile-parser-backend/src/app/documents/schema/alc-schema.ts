@@ -1,6 +1,6 @@
 import {FieldValidator} from '../types/field-validator';
 import {AlcDocFields, FIELD_NAME, OptionalAlcDocFields, RequiredAlcDocFields, toNumber} from 'shared';
-import {exactLengthValidator} from '../validators/fields/exact-length-validator';
+import {exactValueLengthValidator} from '../validators/fields/exact-value-length-validator';
 import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
 import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
 import {decimalValidator} from '../validators/fields/decimal-validator';
@@ -21,7 +21,7 @@ export const alcSchema: FieldValidator<RequiredAlcDocFields, OptionalAlcDocField
     [FIELD_NAME.OZAKZA]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(1),
+            exactValueLengthValidator(1),
             allowedValuesValidator(['A', 'C'])
         ]
     },

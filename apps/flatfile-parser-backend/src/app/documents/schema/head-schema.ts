@@ -10,7 +10,7 @@ import {FieldValidator} from '../types/field-validator';
 import {minValueLengthValidator} from '../validators/fields/min-value-length-validator';
 import {maxValueLengthValidator} from '../validators/fields/max-value-length-validator';
 import {dateValidator} from '../validators/fields/date-validator';
-import {exactLengthValidator} from '../validators/fields/exact-length-validator';
+import {exactValueLengthValidator} from '../validators/fields/exact-value-length-validator';
 import {decimalValidator} from '../validators/fields/decimal-validator';
 import {allowedValuesValidator} from '../validators/fields/allowed-values-validator';
 import {CrossFieldRule} from '../types/doc-validation';
@@ -92,7 +92,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTDOD]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator,
         ]
     },
@@ -106,14 +106,14 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTNRF]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(1),
+            exactValueLengthValidator(1),
             allowedValuesValidator(['7', '9'])
         ]
     },
     [FIELD_NAME.OHTDLD]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator,
         ]
     },
@@ -127,7 +127,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTOND]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator
         ]
     },
@@ -141,7 +141,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTDQD]: {
         required: false,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator,
         ]
     },
@@ -162,7 +162,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTUSBD]: {
         required: false,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator,
         ]
     },
@@ -345,7 +345,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTFOA]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(10),
+            exactValueLengthValidator(10),
             dateValidator
         ]
     },
@@ -392,7 +392,7 @@ export const headSchema: FieldValidator<RequiredHeadDocFields, OptionalHeadDocFi
     [FIELD_NAME.OHTINVTYP]: {
         required: true,
         fieldValidators: [
-            exactLengthValidator(1),
+            exactValueLengthValidator(1),
             allowedValuesValidator(['S', 'T'])
         ]
     },

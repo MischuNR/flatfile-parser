@@ -1,7 +1,7 @@
-import {exactLengthValidator} from './exact-length-validator';
+import {exactValueLengthValidator} from './exact-value-length-validator';
 
 describe('exactLengthValidator', () => {
-    const validator = exactLengthValidator(3);
+    const validator = exactValueLengthValidator(3);
 
     it('value length is low', () => {
         expect(validator('ab')).toEqual(expect.any(String));
