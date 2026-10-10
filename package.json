@@ -6,8 +6,10 @@
   "scripts": {
     "start:frontend": "nx serve flatfile-parser-frontend",
     "lint:frontend": "nx lint flatfile-parser-frontend",
+    "build:frontend": "nx build flatfile-parser-frontend",
     "start:backend": "nx serve flatfile-parser-backend",
     "lint:backend": "nx lint flatfile-parser-backend",
+    "build:backend": "nx build flatfile-parser-backend",
     "test:backend": "nx test flatfile-parser-backend",
     "lint:shared": "nx lint shared"
   },
