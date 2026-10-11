@@ -5,12 +5,16 @@ import {getStatusLabel} from '../../../../utils/get-filter-state-label';
 import {DocumentsStore} from '../../../../store/documents.store';
 
 @Component({
-  selector: 'app-document-list-filter',
+    selector: 'app-document-list-filter',
     imports: [
         ReactiveFormsModule
     ],
-  templateUrl: './document-list-filter.html',
-  styleUrl: './document-list-filter.scss'
+    templateUrl: './document-list-filter.html',
+    styleUrl: './document-list-filter.scss',
+    host: {
+        role: 'search',
+        'aria-label': 'Belege filtern'
+    }
 })
 export class DocumentListFilter {
     protected readonly store = inject(DocumentsStore);

@@ -1,8 +1,8 @@
-<div class="header">
-    <app-document-list-filter></app-document-list-filter>
+<h1>Flatfile-Parser</h1>
 
-    <app-upload-document></app-upload-document>
-</div>
+
+<app-document-list-filter></app-document-list-filter>
+<app-upload-document></app-upload-document>
 
 <div class="list-wrapper">
     @if (!store.documents().length) {
@@ -33,7 +33,8 @@
                             <td colspan="4">{{ document.errorMsg }}</td>
                         }
                         <td>
-                            <a [routerLink]="['/documents', document.id]" [attr.aria-label]="'Details zu Beleg ' + (document.data?.OHTDON ?? document.id)">Details</a>
+                            <a [routerLink]="['/documents', document.id]"
+                               [attr.aria-label]="'Details zu Beleg ' + (document.data?.OHTDON ?? document.id)">Details</a>
                         </td>
                     </tr>
                 } @empty {

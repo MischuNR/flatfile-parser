@@ -1,18 +1,27 @@
-<label for="status-filter">Status filtern</label>
-<select id="status-filter" (change)="changeStatusFilter($event)">
-    @for (statusFilter of statusFilterArr; track statusFilter.value) {
-        <option [value]="statusFilter.value"
-                [selected]="store.statusFilter() === statusFilter.value">{{ statusFilter.label }}
-        </option>
-    }
-</select>
-<input type="text"
-       [value]="store.documentNumberFilter()"
-       placeholder="Belegnummer"
-       aria-label="Nach Belegnummer filtern"
-       (input)="changeFilter($event)">
-<input type="text"
-       [value]="store.recipientFilter()"
-       placeholder="Empfänger"
-       aria-label="Nach Empfänger filtern"
-       (input)="changeRecipientFilter($event)">
+<div class="filter-item-wrapper">
+    <label for="status-filter">Status</label>
+    <select id="status-filter" (change)="changeStatusFilter($event)">
+        @for (statusFilter of statusFilterArr; track statusFilter.value) {
+            <option [value]="statusFilter.value"
+                    [selected]="store.statusFilter() === statusFilter.value">{{ statusFilter.label }}
+            </option>
+        }
+    </select>
+</div>
+
+<div class="filter-item-wrapper fill-width">
+    <label for="recipient-filter">Empfänger</label>
+    <input type="text"
+           id="recipient-filter"
+           placeholder="Name oder GLN"
+           [value]="store.recipientFilter()"
+           (input)="changeRecipientFilter($event)">
+</div>
+
+<div class="filter-item-wrapper fill-width">
+    <label for="document-number">Belegnummer</label>
+    <input type="text"
+           id="document-number"
+           [value]="store.documentNumberFilter()"
+           (input)="changeFilter($event)">
+</div>

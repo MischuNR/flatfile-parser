@@ -2,12 +2,12 @@
     <div role="status" aria-live="polite">Lade Dokumente...</div>
 } @else {
     @if(store.loadDocumentsError(); as error) {
-    <p>
+    <p class="error-message">
         Beim Laden der Daten ist ein Fehler aufgetreten:
         <br>
         {{error.message}}
     </p>
-    <button (click)="store.load()">Erneut versuchen</button>
+    <button class="btn" (click)="store.load()" role="button">Erneut versuchen</button>
     } @else {
         <router-outlet></router-outlet>
     }

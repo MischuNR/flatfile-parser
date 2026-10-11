@@ -1,1 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
 
+label:has(+ .visually-hidden:focus-visible) {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+div {
+  display: flex;
+  align-items: center;
+}

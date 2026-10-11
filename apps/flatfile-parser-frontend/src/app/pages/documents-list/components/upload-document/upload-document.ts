@@ -18,4 +18,10 @@ export class UploadDocument {
             input.value = '';
         }
     }
+
+    protected preventOpeningFilesWhileUploading(event: Event): void {
+        if (this.store.isUploading()) {
+            event.preventDefault();
+        }
+    }
 }

@@ -1,1 +1,21 @@
+@use '../../../../../styles/mixins' as *;
 
+:host {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  flex-direction: row;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.filter-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &.fill-width {
+    flex: 1;
+  }
+}
