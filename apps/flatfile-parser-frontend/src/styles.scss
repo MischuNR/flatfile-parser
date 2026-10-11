@@ -2,11 +2,18 @@
 
 :root {
   --focus-color: #334e68;
+  --primary-color: #2b3340;
+  --error-color: red;
+  --success-color: darkgreen;
 }
 
 html {
   font-family: sans-serif;
   font-size: 1.1rem;
+}
+
+h1 {
+  margin: 0;
 }
 
 .visually-hidden {
@@ -34,7 +41,7 @@ input {
   padding: 0.6rem 1rem;
   border-radius: 8px;
   border: none;
-  background: #2b3340;
+  background: var(--primary-color);
   color: #fff;
   font: inherit;
   text-decoration: none;
@@ -57,5 +64,15 @@ input {
 }
 
 .error-message {
-  color: red;
+  color: var(--error-color);
+}
+
+
+a {
+  color: black;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

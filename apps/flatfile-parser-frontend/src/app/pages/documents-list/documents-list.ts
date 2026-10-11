@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {UploadDocument} from './components/upload-document/upload-document';
 import {DocumentListFilter} from './components/document-list-filter/document-list-filter';
 import {RouterLink} from '@angular/router';
+import {NgClass} from "@angular/common";
 
 @Component({
     selector: 'app-documents-list',
@@ -11,7 +12,8 @@ import {RouterLink} from '@angular/router';
         ReactiveFormsModule,
         UploadDocument,
         DocumentListFilter,
-        RouterLink
+        RouterLink,
+        NgClass
     ],
     templateUrl: './documents-list.html',
     styleUrl: './documents-list.scss'

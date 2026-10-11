@@ -1,13 +1,19 @@
-@if (store.isLoadingDocuments()) {
-    <div role="status" aria-live="polite">Lade Dokumente...</div>
-} @else {
+@let isLoadingDocuments = store.isLoadingDocuments();
+
+<div role="status" aria-live="polite">
+@if (isLoadingDocuments) {
+    Lade Dokumente...
+}
+</div>
+
+@if (!isLoadingDocuments) {
     @if(store.loadDocumentsError(); as error) {
-    <p class="error-message">
-        Beim Laden der Daten ist ein Fehler aufgetreten:
-        <br>
-        {{error.message}}
-    </p>
-    <button class="btn" (click)="store.load()" role="button">Erneut versuchen</button>
+        <p class="error-message" role="alert">
+            Beim Laden der Daten ist ein Fehler aufgetreten:
+            <br>
+            {{error.message}}
+        </p>
+        <button class="btn" (click)="store.load()" role="button">Erneut versuchen</button>
     } @else {
         <router-outlet></router-outlet>
     }

@@ -1,13 +1,20 @@
 <h1>Flatfile-Parser</h1>
 
-
 <app-document-list-filter></app-document-list-filter>
 <app-upload-document></app-upload-document>
 
 <div class="list-wrapper">
-    @if (!store.documents().length) {
-        <p role="status">Es existieren noch keine Belege</p>
-    } @else {
+    @let documents = store.documents();
+    @let filteredDocuments = store.filteredDocuments();
+    <div role="status">
+        @if (!documents.length) {
+            Es existieren noch keine Belege
+        } @else {
+            {{ filteredDocuments.length }} von {{ documents.length }} Belegen werden angezeigt
+        }
+    </div>
+
+    @if (documents.length) {
         <table>
             <caption class="visually-hidden">Belegliste</caption>
             <thead>
@@ -21,25 +28,23 @@
             </tr>
             </thead>
             <tbody>
-                @for (document of store.filteredDocuments(); track document.id) {
-                    <tr [class.error]="!document.isSuccess">
-                        <td>{{ document.isSuccess ? 'OK' : 'FEHLERHAFT' }}</td>
+                @for (document of filteredDocuments; track document.id) {
+                    <tr>
+                        <td class="state-column-data" [ngClass]="document.isSuccess ? 'success' : 'error'">{{ document.isSuccess ? 'OK' : 'FEHLERHAFT' }}</td>
                         @if (document.isSuccess) {
                             <td>{{ document.data?.OHTDON ?? '-' }}</td>
                             <td>{{ document.data?.OHTLN1 ?? '-' }}</td>
                             <td>{{ document.data?.OHTDOD ?? '-' }}</td>
                             <td>{{ document.data?.OHTGES ?? '-' }}</td>
                         } @else {
-                            <td colspan="4">{{ document.errorMsg }}</td>
+                            <td colspan="4" class="error-message">{{ document.errorMsg }}</td>
                         }
                         <td>
                             <a [routerLink]="['/documents', document.id]"
-                               [attr.aria-label]="'Details zu Beleg ' + (document.data?.OHTDON ?? document.id)">Details</a>
+                               [attr.aria-label]="document.isSuccess ? 'Details zu Beleg ' + document.data?.OHTDON: 'Details zum fehlerhaften Beleg'">
+                                Details
+                            </a>
                         </td>
-                    </tr>
-                } @empty {
-                    <tr>
-                        <td colspan="6" role="status">Keine passenden Belege gefunden.</td>
                     </tr>
                 }
             </tbody>
