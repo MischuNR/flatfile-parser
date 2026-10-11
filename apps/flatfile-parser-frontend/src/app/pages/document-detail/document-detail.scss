@@ -1,10 +1,57 @@
+@use "../../../styles/mixins" as *;
+
 :host {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 
-.document-outer-wrapper {
+  div {
+    flex: 1;
+  }
 
+  small {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.file-download {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  a {
+    height: fit-content;
+  }
+
+  @include mobile {
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    a {
+      flex: 1;
+      display: inline-block;
+      text-align: center;
+    }
+  }
+}
+
+.inner-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

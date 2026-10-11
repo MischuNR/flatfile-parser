@@ -58,7 +58,6 @@ export const DocumentsStore = signalStore(
         upload: rxMethod<File>(
             pipe(
                 tap(() => patchState(store, {isUploading: true, uploadError: null})),
-                delay(2000),
                 switchMap((file) => api.uploadDocument(file)),
                 tap((result) => {
                     if (isApiError(result)) {
@@ -77,7 +76,6 @@ export const DocumentsStore = signalStore(
         load: rxMethod<void>(
             pipe(
                 tap(() => patchState(store, {isLoadingDocuments: true, loadDocumentsError: null})),
-                delay(2000),
                 switchMap(() => api.getAllDocuments()),
                 tap((result) => {
                     if (isApiError(result)) {

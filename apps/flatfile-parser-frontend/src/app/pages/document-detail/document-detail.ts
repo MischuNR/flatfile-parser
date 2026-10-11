@@ -5,12 +5,18 @@ import {DocumentsService} from '../../services/documents.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import {RecordFields} from './components/record-fields/record-fields';
+import {TextElement} from './components/text-element/text-element';
+import {AlcElement} from "./components/alc-element/alc-element";
+import {PosElement} from "./components/pos-element/pos-element";
 
 @Component({
   selector: 'app-document-detail',
     imports: [
         RouterLink,
-        RecordFields
+        RecordFields,
+        TextElement,
+        AlcElement,
+        PosElement
     ],
   templateUrl: './document-detail.html',
   styleUrl: './document-detail.scss'

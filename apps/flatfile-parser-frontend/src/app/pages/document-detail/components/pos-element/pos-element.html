@@ -1,0 +1,29 @@
+@let pos = posElement();
+
+<div class="pos-data-wrapper">
+    <ng-content select="[heading]"></ng-content>
+    <app-record-fields [record]="pos"></app-record-fields>
+</div>
+
+@if (pos.POS_TEXT.length) {
+    <div class="inner-content-wrapper">
+        <h3>Positionstexte</h3>
+        @for (t of pos.POS_TEXT; track i; let i = $index) {
+            <app-text-element [textElement]="t">
+                <h4 heading>Text {{ i + 1 }}</h4>
+            </app-text-element>
+        }
+    </div>
+}
+
+@if (pos.POS_ALC.length) {
+    <div class="inner-content-wrapper">
+        <h3>Positions-Rabatte/Zuschläge</h3>
+        @for (a of pos.POS_ALC; track i; let i = $index) {
+            <app-alc-element [alcElement]="a">
+                <h4 heading>Rabatt/Zuschlag {{ i + 1 }}</h4>
+            </app-alc-element>
+        }
+    </div>
+}
+
