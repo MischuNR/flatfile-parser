@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {UploadDocument} from './components/upload-document/upload-document';
 import {DocumentListFilter} from './components/document-list-filter/document-list-filter';
 import {RouterLink} from '@angular/router';
-import {NgClass} from "@angular/common";
+import {NgClass} from '@angular/common';
 
 @Component({
     selector: 'app-documents-list',

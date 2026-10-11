@@ -1,7 +1,7 @@
 import {computed, inject} from '@angular/core';
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
 import {rxMethod} from '@ngrx/signals/rxjs-interop';
-import {delay, pipe, switchMap, tap} from 'rxjs';
+import {pipe, switchMap, tap} from 'rxjs';
 import {Doc, FIELD_NAME, HeadDocFields} from 'shared';
 import {DocumentsService} from '../services/documents.service';
 import {isApiError} from '../utils/is-api-error';
