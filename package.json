@@ -1,7 +1,7 @@
 {
-  "name": "menten-bewerbung",
+  "name": "flatfile-parser",
   "version": "1.0.0",
-  "description": "Aufgabe für die Bewerbung bei der menten GmbH",
+  "description": "Flatfile Parser",
   "main": "index.js",
   "scripts": {
     "start:frontend": "nx serve flatfile-parser-frontend",
@@ -13,18 +13,10 @@
     "test:backend": "nx test flatfile-parser-backend",
     "lint:shared": "nx lint shared"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MischuNR/menten-bewerbung.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/MischuNR/menten-bewerbung/issues"
-  },
-  "homepage": "https://github.com/MischuNR/menten-bewerbung#readme",
   "devDependencies": {
     "@angular-devkit/core": "~22.1.0",
     "@angular-devkit/schematics": "~22.1.0",
@@ -35,7 +27,7 @@
     "@eslint/js": "^9.8.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.0",
-    "@nx/angular": "^23.2.1",
+    "@nx/angular": "23.2.1",
     "@nx/eslint": "23.2.1",
     "@nx/eslint-plugin": "23.2.1",
     "@nx/jest": "23.2.1",
